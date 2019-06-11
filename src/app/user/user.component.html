@@ -1,0 +1,19 @@
+<ng4-loading-spinner [threshold]="1000" [loadingText]="'Please wait...'" [zIndex]="999"></ng4-loading-spinner>
+<app-rec-nav-bar></app-rec-nav-bar>
+<div class="jumbotron-fluid text-center">
+<div class="container-fluid">
+  <div class="row m-0 p-0">
+    <div class="col-lg-12">
+      <dx-scheduler [height]="550" [dataSource]="dataSource" dateCellTemplate="dateCellTemplate" [showAllDayPanel]="false"
+        [views]="views" currentView="workWeek" [currentDate]="currentDate" [startDayHour]="7" [endDayHour]="23">
+
+        <div *dxTemplate="let data of 'dateCellTemplate'">
+          <div class="name">{{['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][data.date.getDay()]}}</div>
+          <div class="number">{{data.date.getDate()}}</div>
+        </div>
+      </dx-scheduler>
+    </div>
+  </div>
+</div>
+</div>
+<app-footer></app-footer>
