@@ -442,7 +442,7 @@
                         <select class="custom-select" id="UserID" name="UserID" [(ngModel)]="eventUserRole.UserID"
                             #UserID="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && UserID.invalid }"
                             required>
-                            <option value="" selected disabled hidden>--- Select User ---</option>
+                            <option value="" selected disabled hidden> Select User </option>
                             <option *ngFor="let uList of comUserList" value={{uList.rid}}>{{uList.cUser}}</option>
                         </select>
                     </div>
