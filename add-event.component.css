@@ -1,0 +1,81 @@
+select,option,input,span,btn
+{
+    font-size: small;        
+    overflow: initial;
+    text-overflow: ellipsis;
+}
+select
+{
+    height: 31px;
+}
+
+.ng-valid[required], .ng-valid.required
+{
+    border-left: 5px solid #42A948; /* success */
+}
+
+.ng-invalid:not(form)
+{
+    border-left: 5px solid #a94442; /* Error */
+} 
+
+.skills-box {
+    display: inline-block;
+    padding: 0px 7px;
+    background: #f7fbfd;
+    color: #696969;
+    border-radius: 2px;
+    margin: 3px;
+    border: 1px solid #e5e7e8;
+    box-shadow: 2px 2px 0px 0px #d4d4d4;
+ }
+ .jumbotron-fluid
+ {
+    margin-top: 10px;
+    min-height: 100vh;
+    margin-bottom: 80px;
+ }
+
+ /* star rating */
+ .stars-container {
+    position: relative;
+    display: inline-block;
+    color: transparent;
+    font-size: 15px;
+  }
+  
+  .stars-container:before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '★★★★★';
+    color:lightgray;
+  }
+  
+  .stars-container:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '★★★★★';
+    color: gold;
+    overflow: hidden;
+  }
+  .edu-btn{
+    background-color: cornflowerblue;
+    color: aliceblue;
+  }
+  .skill-btn{
+    background-color: cornflowerblue;
+    color: aliceblue;
+  }
+  .user-btn{
+    background-color: cornflowerblue;
+    color: aliceblue;
+  }
+  
+  .stars-0:after { width: 0%; }
+  .stars-1:after { width: 20%; }
+  .stars-2:after { width: 40%; }
+  .stars-3:after { width: 60%; }
+  .stars-4:after { width: 80%; }
+  .stars-5:after { width: 100%;}
