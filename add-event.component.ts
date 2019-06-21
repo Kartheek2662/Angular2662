@@ -234,7 +234,7 @@ export class AddEventComponent implements OnInit {
     this.getVaddressList(this.uID.companyId);
     this.getCUserListByID(this.uID.companyId);
     this.getAssessmentList();
-    this.getWorkflowList();
+    this.getWorkflowList()
     this.getWorkFlow(this.eventCreateModel.WorkflowID);
     this.fnSkillFamily();
     this.fnSkillList();
