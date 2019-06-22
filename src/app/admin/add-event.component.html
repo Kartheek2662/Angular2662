@@ -1,0 +1,705 @@
+<ng4-loading-spinner [threshold]="1000" [loadingText]="'Please wait...'" [zIndex]="999"></ng4-loading-spinner>
+
+<div class="jumbotron-fluid">
+    <h5 class="text-center mb-2">
+        <u>Add Campaign</u>
+    </h5>
+    <!-- <div class="container mb-3">
+        <form name="addEventForm" (ngSubmit)="eventSubmit(createEvent)" #createEvent="ngForm" novalidate>
+            <div class="row">
+                
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Title</span>
+                        </div>
+                        <input type="text" class="form-control" id="Title" name="title" [(ngModel)]="eventCreateModel.title"
+                            #title="ngModel" maxlength="500" placeholder="Title" pattern="[^#$%*`~=]+" autocomplete="off"
+                            [ngClass]="{ 'is-invalid': createEvent.submitted && title.invalid }" required />
+                    </div>
+                    <div *ngIf="createEvent.submitted && title.invalid" class="bg-white text-danger p-0 mr-3">
+                        <div *ngIf="title.errors.required">Title is required.</div>
+                        <div *ngIf="title.errors?.maxlength">Title max length</div>
+                        <div *ngIf="title.errors.pattern">Special character not allowed in title field</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4 col-sm-6 col-md-4 col-lg-4 mb-3">
+                    <div class="input-group input-group-sm ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Domain</span>
+                        </div>
+                        <select class="custom-select" id="Domain" name="Domain" [(ngModel)]="eventCreateModel.domain"
+                            #domain="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && domain.invalid }"
+                            required>
+                            <option value="" selected disabled hidden>--- Select Domain ---</option>
+                            <option *ngFor="let domain of domainList" value={{domain.rid}}>{{domain.title}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && domain.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="domain.errors.required">Domain is required.</div>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-6 col-md-4 col-lg-4 mb-3">
+                    <div class="input-group input-group-sm ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Industry</span>
+                        </div>
+                        <select class="custom-select" id="Industry" name="Industry" [(ngModel)]="eventCreateModel.industry"
+                            #industry="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && industry.invalid }"
+                            required>
+                            <option value="" selected disabled hidden>--- Select Industry ---</option>
+                            <option *ngFor="let indlist of industryList" value={{indlist.rid}}>{{indlist.title}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && industry.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="industry.errors.required">Industry is required.</div>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-6 col-md-4 col-lg-4 mb-3">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-0 p-0 mx-auto">
+                            <p class="mr-2"><strong>Job Type</strong></p>
+                            <label class="radio-inline mr-1">
+                                <input type="radio" name="JobType" value="2" [(ngModel)]="eventCreateModel.JobType"
+                                    #JobType="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && JobType.invalid }"
+                                    required />Permenent
+                            </label>
+                            <label class="radio-inline mr-1">
+                                <input type="radio" name="JobType" value="1" [(ngModel)]="eventCreateModel.JobType"
+                                    #JobType="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && JobType.invalid }"
+                                    required />Contract
+                            </label>
+                            <div *ngIf="createEvent.submitted && JobType.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                                <div *ngIf="JobType.errors.required">Select job type.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-0 p-0 mx-auto">
+                            <p class="mr-2"><strong>Job Time</strong></p>
+                            <label class="radio-inline mr-1">
+                                <input type="radio" name="JobTime" value="2" [(ngModel)]="eventCreateModel.JobTime"
+                                    #JobTime="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && JobTime.invalid }"
+                                    required />FullTime
+                            </label>
+                            <label class="radio-inline mr-1">
+                                <input type="radio" name="JobTime" value="1" [(ngModel)]="eventCreateModel.JobTime"
+                                    #JobTime="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && JobTime.invalid }"
+                                    required />PartTime
+                            </label>
+                            <div *ngIf="createEvent.submitted && JobTime.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                                <div *ngIf="JobTime.errors.required">Select job time.</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">KeyWords</span>
+                        </div>
+                        <input id="KeyWords" type="text" class="form-control" name="KeyWords" placeholder="Ex: Java"
+                            maxlength="500" [(ngModel)]="eventCreateModel.keyWords" pattern="[^#$%*`~=(){}]+" #keyWords="ngModel"
+                            [ngClass]="{ 'is-invalid': createEvent.submitted && keyWords.invalid }" required>
+                    </div>
+                    <div *ngIf="createEvent.submitted && keyWords.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="keyWords.errors.required">Keywords name is required.</div>
+                        <div *ngIf="keyWords.errors.pattern">Special character not allowed in keywords field</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="skillViewList !=''">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3">
+                    <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0 m-0 bg-white mx-auto">
+                        <p class="text-center font-weight-bold"><u>Skills and rating List</u></p>
+                        <button type="button" class="btn btn-sm btn-primary float-right" *ngIf="!cnfDeleteSkill"
+                            (click)="fnAddSkill()">Add</button>
+                        <table class="table table-sm table-bordered table-hover text-center mx-auto" *ngIf="!cnfDeleteSkill">
+                            <tr>
+                                <th>No</th>
+                                <th>Skill</th>
+                                <th>Minimum rating</th>
+                                <th colspan="2">Action</th>
+                            </tr>
+                            <tr *ngFor="let user of skillViewList ; let i =index">
+                                <td>{{i+1}}</td>
+                                <td>{{user.title}}</td>
+                                <td>
+                                    <rating name="{{user.title}}" [(ngModel)]="user.SkillRating" style="color:#FFDF00"
+                                        [max]="max" [readonly]="isReadonly"></rating><span *ngIf="user.SkillRating != 0">&nbsp;
+                                        {{user.SkillRating}}
+                                        stars</span>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-link text-warning p-0 m-0" [disabled]="isSkillEdit"
+                                        (click)="fnEditSkill(i)">Edit</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-link text-danger p-0 m-0" [disabled]="isSkillEdit"
+                                        (click)="fnDeleteSkill(i)">Delete</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <div *ngIf="skillExitErr">
+                            <p class="bg-white text-danger border-danger p-0 mr-3">{{skillAddErr}}</p>
+                        </div>
+                        <div *ngIf="cnfDeleteSkill" class="mx-auto col-sm text-center m-2 p-2">
+                            <p class="m-0 p-0 text-uppercase font-weight-bold text-red">Are you sure you
+                                want
+                                to
+                                Delete?</p>
+                            <button type="button" class="btn btn-sm btn-danger mr-2" value="true" id="check" (click)="fnCNFSkillDelete(cnfDeleteSkill)">Yes</button>
+                            <button type="button" class="btn btn-sm btn-primary" (click)="cnfDeleteSkill = false">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="!skillField">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mb-3">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Skill Family</span>
+                        </div>
+                        <select class="custom-select" id="fSkill" name="fSkill" [(ngModel)]="eventSkillModel.SFID"
+                            (change)="fnSkillList(eventSkillModel.SFID)" #EventSkillFamily="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && EventSkillFamily.invalid }"
+                            required>
+                            <option value="" selected disabled hidden>--- Select Skill Family ---</option>
+                            <option *ngFor="let sFamily of skillFamily" value={{sFamily.rid}}>{{sFamily.title}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && EventSkillFamily.invalid && skillViewList ==''" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="EventSkillFamily.errors.required">Skill Family is required.</div>
+                    </div>
+                    <div *ngIf="skillFamilyErr && EventSkillFamily.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="skillFamilyErr">{{skillSelErr}}</div>
+                    </div>
+                    <div *ngIf="isAddSkill" class="bg-white text-danger border-danger p-0 mr-3">Add Skill!</div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mb-3">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Skill</span>
+                        </div>
+                        <select [disabled]="!skillDataList.length" class="custom-select" id="skill" name="skill"
+                            (change)="fnFindSkillId(eventSkillModel.SkillID)" [(ngModel)]="eventSkillModel.SkillID"
+                            #EventSkill="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && EventSkill.invalid }"
+                            required>
+                            <option value="" selected disabled hidden>--- Select Skill ---</option>
+                            <option *ngFor="let skill of skillDataList" value={{skill.rid}}>{{skill.title}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && EventSkill.invalid && skillViewList ==''" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="EventSkill.errors.required">Skill is required.</div>
+                    </div>
+                    <div *ngIf="skillErr && EventSkill.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="skillErr">{{skillSelErr}}</div>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mb-3">
+                    <rating name="rating" [(ngModel)]="eventSkillModel.SkillRating" #SkillRating="ngModel" style="color:#FFDF00"
+                        [max]="max" (onHover)="hoveringOver($event)" title="Give minimum rating to Skill" aria-required="true"
+                        required></rating>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 mb-3">
+                    <button type="button" class="btn btn-sm btn-primary mr-2" [disabled]="createEvent.submitted && (SkillRating.invalid || EventSkill.invalid)"
+                        (click)="fnAddEventSkill()">Add</button>
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="fnAddEventSkill()" *ngIf="isSkillEdit">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="fnSkillRateCancel()" *ngIf="isCanshow">Cancel</button>
+                </div>
+            </div>
+            <div class="row" *ngIf="eduViewList !=''">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3">
+                    <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0 m-0 bg-white mx-auto">
+                        <p class="text-center font-weight-bold"><u>Education List</u></p>
+                        <button type="button" class="btn btn-sm btn-primary float-right" *ngIf="!cnfDeleteEdu" (click)="fnEduSkill()">Add</button>
+                        <table class="table table-sm table-bordered table-hover text-center mx-auto" *ngIf="!cnfDeleteEdu">
+                            <tr>
+                                <th>No</th>
+                                <th>Course</th>
+                                <th colspan="2">Action</th>
+                            </tr>
+                            <tr *ngFor="let user of eduViewList ; let i =index">
+                                <td>{{i+1}}</td>
+                                <td>{{user.title}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-link text-warning p-0 m-0" [disabled]="isEduEdit"
+                                        (click)="fnEditEdu(i)">Edit</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-link text-danger p-0 m-0" [disabled]="isEduEdit"
+                                        (click)="fnDeleteEducation(i)">Delete</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <div *ngIf="eduExists">
+                            <p class="bg-white text-danger border-danger p-0 mr-3">{{eduAddErr}}</p>
+                        </div>
+                        <div *ngIf="cnfDeleteEdu" class="mx-auto col-sm text-center m-2 p-2">
+                            <p class="m-0 p-0 text-uppercase font-weight-bold text-red">Are you sure you
+                                want
+                                to
+                                Delete?</p>
+                            <button type="button" class="btn btn-sm btn-danger mr-2" value="true" id="check" (click)="fnCNFEduDelete(cnfDeleteEdu)">Yes</button>
+                            <button type="button" class="btn btn-sm btn-primary" (click)="cnfDeleteEdu = false">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="!eduField">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-3">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Education</span>
+                        </div>
+                        <select class="custom-select" id="Education" name="Education" [(ngModel)]="courseModel.courseID"
+                            (change)="fnEduTitile(courseModel.courseID)" #Education="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && Education.invalid }"
+                            required>
+                            <option value="" selected disabled hidden>--- Select Course ---</option>
+                            <option *ngFor="let course of courseList" value={{course.rid}}>{{course.title}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && Education.invalid && eduViewList ==''" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="Education.errors.required">Course is required.</div>
+                    </div>
+                    <div *ngIf="eduErr && Education.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="eduErr">{{eduSelectErr}}</div>
+                    </div>
+                    <div *ngIf="isEduAdd" class="bg-white text-danger border-danger p-0 mr-3">Add Course!</div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-3">
+                    <button type="button" class="btn btn-sm btn-primary mr-2" [disabled]="createEvent.submitted && Education.invalid"
+                        (click)="fnAddCourse()">Add</button>
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="fnAddCourse()" *ngIf="isEduEdit">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="fnEduCancel()" *ngIf="isEduShow">Cancel</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-3">
+                    <div class="input-group input-group-sm" date id='datetimepicker1'>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text fa fa-calendar-check-o" id="inputGroup-sizing-sm"></span>
+                        </div>
+                        <input type="text" placeholder="Start Date" bsDatepicker [bsConfig]="datePickerConfig" #dp="bsDatepicker"
+                            [minDate]="minDate" class="form-control" name="SDate" [(ngModel)]="eventCreateModel.sDate"
+                            #sDate="ngModel" [bsValue]="eventCreateModel.sDate" [ngClass]="{ 'is-invalid': createEvent.submitted && sDate.invalid }"
+                            required />
+                    </div>
+                    <div *ngIf="createEvent.submitted && sDate.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="sDate.errors.required">Start date is required.</div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-3">
+                    <div class="input-group input-group-sm " date id='datetimepicker'>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text fa fa-calendar-times-o" id="inputGroup-sizing-sm"></span>
+                        </div>
+                        <input type="text" placeholder="End Date" bsDatepicker [bsConfig]="datePickerConfig" #dp="bsDatepicker"
+                            [minDate]="minDate" class="form-control" name="EDate" [(ngModel)]="eventCreateModel.eDate"
+                            #eDate="ngModel" [bsValue]="eventCreateModel.eDate" [ngClass]="{ 'is-invalid': createEvent.submitted && eDate.invalid }"
+                            required />
+                    </div>
+                    <div *ngIf="createEvent.submitted && eDate.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="eDate.errors.required">End date is required.</div>
+                    </div>
+                    <div class="bg-white text-danger border-danger p-0 mr-3" *ngIf="dateComp">{{dateError}}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-3">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Passout Year</span>
+                        </div>
+                        <select class="custom-select" id="PassoutYear" name="PassoutYear" [(ngModel)]="eventCreateModel.passoutYear"
+                            #passoutYear="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && passoutYear.invalid }"
+                            required>
+                            <option value="" selected disabled hidden>--- Select Passout Year ---</option>
+                            <option *ngFor="let pass of passYear" value={{pass}}>{{pass}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && passoutYear.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="passoutYear.errors.required">Passout Year is required.</div>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-3">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Experience From</span>
+                        </div>
+                        <select class="custom-select" name="Exp_From_Year" [(ngModel)]="eventCreateModel.exp_From"
+                            #exp_from_year="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && exp_from_year.invalid }"
+                            required>
+                            <option value="" selected disabled hidden>--- Select Experience From ---</option>
+                            <option *ngFor="let year of YearList" value={{year}}>{{year}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && exp_from_year.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="exp_from_year.errors.required">Experience year is required.</div>
+                    </div>
+                    <div *ngIf="expComp" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div>{{expError}}</div>
+                    </div>
+                </div>
+
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-3">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Experience To</span>
+                        </div>
+                        <select class="custom-select" name="Exp_To_Year" [(ngModel)]="eventCreateModel.exp_To"
+                            #exp_to_year="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && exp_to_year.invalid }"
+                            required>
+                            <option value="" selected disabled hidden>--- Select Experience To ---</option>
+                            <option *ngFor="let year of YearList" value={{year}}>{{year}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && exp_to_year.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="exp_to_year.errors.required">Experience year is required.</div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Venue address</span>
+                        </div>
+                        <select class="custom-select" id="V_Address" name="V_Address" [(ngModel)]="eventCreateModel.V_Address"
+                            #v_Address="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && v_Address.invalid }"
+                            required>
+                            <option value="" selected disabled hidden>--- Select Address ---</option>
+                            <option *ngFor="let add of vAddressList" value={{add.rid}}>{{add.v_Name}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && v_Address.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="v_Address.errors.required">Venue address is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Job Description</span>
+                    </div>
+                    <quill-editor [style]="{height: '150px'}" placeholder="Write Description" id="JobDescription" name="JobDescription"
+                        [(ngModel)]="eventCreateModel.jobDescription" #jobDescription="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && jobDescription.invalid }"
+                        [required]="true"></quill-editor>
+                    <div *ngIf="createEvent.submitted && jobDescription.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="jobDescription.errors.required">Job Description is required.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0 m-0 bg-white mx-auto" *ngIf="eUserList !=''">
+                    <p class="text-center">User's Role List</p>
+                    <button type="button" class="btn btn-sm btn-primary float-right" *ngIf="!cnfDeleteEdu " (click)="fnAddEventUserRole()">Add</button>
+                    <table class="table table-sm table-bordered table-hover text-center mx-auto" *ngIf="!cnfDeleteEdu ">
+                        <tr>
+                            <th>No</th>
+                            <th>User Name</th>
+                            <th>User Role</th>
+                            <th colspan="2">Action</th>
+                        </tr>
+                        <tr *ngFor="let user of arrUserRole ; let i =index">
+                            <td>{{i+1}}</td>
+                            <td>{{user.UserID}}</td>
+                            <td>{{user.Role}}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-link text-warning p-0 m-0" [disabled]="isEventUserEdit"
+                                    (click)="fnEditEventUserRole(i)">Edit</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-link text-danger p-0 m-0" [disabled]="isEventUserEdit"
+                                    (click)="fnDeleteEventUserRole(i)">Delete</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <div *ngIf="roleError">
+                        <p class="bg-white text-danger border-danger p-0 mr-3">{{userRoleError}}</p>
+                    </div>
+                    <div *ngIf="cnfDeleteEdu" class="mx-auto col-sm text-center">
+                        <p class="m-0 p-0 text-uppercase font-weight-bold text-red">Are you sure you want
+                            to
+                            Delete?</p>
+                        <button type="button" class="btn btn-sm btn-danger mr-2" value="true" id="check" (click)="fnCNFDelete(cnfDeleteEdu)">Yes</button>
+                        <button type="button" class="btn btn-sm btn-primary" (click)="cnfDeleteEdu = false">No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="!roleField">
+                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 mb-3">
+                    <div class="input-group input-group-sm ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Users</span>
+                        </div>
+                        <select class="custom-select" id="UserID" name="UserID" [(ngModel)]="eventUserRole.UserID"
+                            #UserID="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && UserID.invalid }"
+                            required>
+                            <option value="" selected disabled hidden>--- Select User ---</option>
+                            <option *ngFor="let uList of comUserList" value={{uList.rid}}>{{uList.cUser}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && UserID.invalid && eUserList ==''" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="UserID.errors.required">User is required.</div>
+                    </div>
+                    <div *ngIf="userRoll && UserID.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="userRoll">{{uRoleReq}}</div>
+                    </div>
+                    <div *ngIf="isUserAdd" class="bg-white text-danger border-danger p-0 mr-3">Add User!</div>
+                </div>
+                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 mb-3">
+                    <div class="input-group input-group-sm ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Role</span>
+                        </div>
+                        <select class="custom-select" id="Role" name="Role" [(ngModel)]="eventUserRole.Role" #Role="ngModel"
+                            [ngClass]="{ 'is-invalid': createEvent.submitted && Role.invalid }" required>
+                            <option value="" selected disabled hidden>--- Select Role ---</option>
+                            <option *ngFor="let uRole of eUserRole" value={{uRole.id}}>{{uRole.title}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && Role.invalid && eUserList ==''" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="Role.errors.required">Role is required.</div>
+                    </div>
+                    <div *ngIf="roleTitle && Role.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="roleTitle">{{roleReq}}</div>
+                    </div>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <button type="button" class="btn btn-primary btn-sm mr-2 float-left" (click)="fnAddEventUser()"
+                        [disabled]="createEvent.submitted && (UserID.invalid || Role.invalid)">Add</button>
+                    <button type="button" (click)="fnAddEventUser()" class="btn btn-sm btn-secondary" *ngIf="isEventUserEdit">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="fnUserRoleCancel()" *ngIf="isAddUserCan">Cancel</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-3">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Assessment</span>
+                        </div>
+                        <select class="custom-select" id="AssessmentID" name="AssessmentID" [(ngModel)]="eventCreateModel.AssessmentID"
+                            #AssessmentID="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && AssessmentID.invalid }"
+                            required>
+                            <option value="" selected disabled hidden>--- Select User ---</option>
+                            <option *ngFor="let asses of AssessmentList" value={{asses.rid}}>{{asses.title}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && AssessmentID.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="AssessmentID.errors.required">Assessment is required.</div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-3">
+                    <div class="input-group input-group-sm ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Workflow</span>
+                        </div>
+                        <select class="custom-select" id="WorkflowID" name="WorkflowID" [(ngModel)]="eventCreateModel.WorkflowID"
+                            #WorkflowID="ngModel" [ngClass]="{ 'is-invalid': createEvent.submitted && WorkflowID.invalid }"
+                            (change)="getWorkFlow(eventCreateModel.WorkflowID)" required>
+                            <option value="" selected disabled hidden>--- Select Workflow ---</option>
+                            <option *ngFor="let flow of WorkFlowList" value={{flow.tid}}>{{flow.templateName}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="createEvent.submitted && WorkflowID.invalid" class="bg-white text-danger border-danger p-0 mr-3">
+                        <div *ngIf="WorkflowID.errors.required">Workflow is required.</div>
+                    </div>
+                    <div>
+                        <span *ngFor="let flow of workflow; last as isLast" class="skills-box">{{flow.v_Name}}
+                            <i class="fa fa-arrow-right fa-fw ml-1" aria-hidden="true" *ngIf="!isLast"></i>
+                            <i class="fa fa-check fa-fw ml-1" aria-hidden="true" *ngIf="isLast"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float-right text-right">
+                    <button type="button" class="btn btn-secondary btn-sm mr-3" (click)="backToDashboard(createEvent)">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                </div>
+            </div>
+        </form>
+    </div> -->
+    <div class="container">
+        <form (submit)="eventSubmit(eventCreateModel)">
+            <dx-form id="form" [formData]="eventCreateModel" [colCount]="4" #addCamp
+                validationGroup="eventCreateModelData" [showColonAfterLabel]="true" [showRequiredMark]="true"
+                requiredMark="*">
+                <dxi-item [label]="{text: 'Title'}" dataField="title" editorType="dxTextBox" [colSpan]="4"
+                    [editorOptions]="{ placeholder:'Title'}">
+                    <dxi-validation-rule type="required" message="Title is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'Domain'}" dataField="domain" editorType="dxSelectBox" [colSpan]="1"
+                    [editorOptions]="{ placeholder:'Select Domain',dataSource:domainList,valueExpr:'rid',displayExpr:'title'}">
+                    <dxi-validation-rule type="required" message="Domain is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'Industry'}" dataField="industry" editorType="dxSelectBox" [colSpan]="1"
+                    [editorOptions]="{ placeholder:'Select Industry',dataSource:industryList,valueExpr:'rid',displayExpr:'title'}">
+                    <dxi-validation-rule type="required" message="Industry is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [colSpan]="1" dataField="JobType">
+                    <dx-radio-group [dataSource]="JobType" displayExpr="text" valueExpr="value" value="0" layout="horizontal" (onValueChanged)="jobTypeValue($event)">
+                    </dx-radio-group>
+                    <dxi-validation-rule type="required" message="JobType Are required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [colSpan]="1" dataField="JobTime">
+                    <dx-radio-group [dataSource]="JobTime" displayExpr="text" valueExpr="value" value="0" layout="horizontal" (onValueChanged)="jobTimeValue($event)">
+                    </dx-radio-group>
+                    <dxi-validation-rule type="required" message="JobTime Are required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'Keywords'}" dataField="keyWords" [colSpan]="4">
+                    <dxi-validation-rule type="required" message="KeyWords Are required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [colSpan]="4" [label]="{text: 'Add Skills'}" dataField="EventSkill">
+                    <dx-button text="Add" class="float-right" [elementAttr]="{ id: 'addSkill', class: 'skill-btn'}"
+                        (onClick)="addSkillRowClick()"></dx-button>
+                    <dx-data-grid #gridContainer [dataSource]="datasourceSkill" [allowColumnResizing]="true"
+                        [showBorders]="true" [columnResizingMode]="true" [columnMinWidth]="50" [columnAutoWidth]="true">
+                        <dxo-editing mode="row" [allowUpdating]="true" [allowAdding]="false" [allowDeleting]="true">
+                        </dxo-editing>
+                        <dxi-column dataField="SFID" caption="Skill Family">
+                            <dxo-lookup [dataSource]="skillFamily" valueExpr="rid" displayExpr="title">
+                            </dxo-lookup>
+                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                        </dxi-column>
+                        <dxi-column dataField="SkillRating" cellTemplate="cellTemplate">
+                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                        </dxi-column>
+                        <dxi-column dataField="SkillID" caption="Skill">
+                            <dxo-lookup [dataSource]="skillDataList" valueExpr="rid" displayExpr="title">
+                            </dxo-lookup>
+                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                        </dxi-column>
+                        <div *dxTemplate="let rate of 'cellTemplate'">
+                            <span class="stars-container stars-4">★★★★★</span>
+                        </div>
+                    </dx-data-grid>
+                    <dxi-validation-rule type="required" message="Skills are required"></dxi-validation-rule>
+                </dxi-item>
+
+                <dxi-item [label]="{text: 'Education'}" [colSpan]="4" dataField="EduID">
+                    <dx-button class="float-right" text="Add" [elementAttr]="{ id: 'addEdu', class: 'edu-btn'}"
+                        (onClick)="addEduRowClick()"></dx-button>
+                    <dx-data-grid #gridContainer1 [dataSource]="datasourceEdu" [allowColumnResizing]="true"
+                        [showBorders]="true" [columnResizingMode]="true" [columnMinWidth]="50" [columnAutoWidth]="true">
+                        <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true">
+                        </dxo-editing>
+                        <dxi-column dataField="EduID" caption="Add Education">
+                            <dxo-lookup [dataSource]="courseList" valueExpr="rid" displayExpr="title">
+                            </dxo-lookup>
+                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                        </dxi-column>
+                        <dxi-column type="buttons" [width]="110">
+                            <dxi-button name="edit"></dxi-button>
+                            <dxi-button name="delete"></dxi-button>
+                        </dxi-column>
+                    </dx-data-grid>
+                    <dxi-validation-rule type="required" message="Education is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'Start Date'}" dataField="sDate" [colSpan]="2">
+                    <dx-date-box displayFormat="dd-MMM-yyyy" [min]="min" [(value)]="bsValue" width="100%">
+                    </dx-date-box>
+                    <dxi-validation-rule type="required" message="Start date is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'End Date'}" dataField="eDate" [colSpan]="2">
+                    <dx-date-box displayFormat="dd-MMM-yyyy" [(value)]="now" width="100%">
+                    </dx-date-box>
+                    <dxi-validation-rule type="required" message="End date is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'Passout Year'}" dataField="passoutYear" editorType="dxSelectBox"
+                    [editorOptions]="{ dataSource:passYear}" [colSpan]="2">
+                    <dxi-validation-rule type="required" message="PassoutYear is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'Experience From'}" dataField="exp_From" editorType="dxSelectBox"
+                    [colSpan]="1"
+                    [editorOptions]="{ placeholder:'From',dataSource:yearList,valueExpr:'id',displayExpr:'year'}">
+                    <dxi-validation-rule type="required" message="Experience From is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'Experience To'}" dataField="exp_To" [colSpan]="1" editorType="dxSelectBox"
+                    [editorOptions]="{ placeholder:'To',dataSource:yearList,valueExpr:'id',displayExpr:'year'}">
+                    <dxi-validation-rule type="required" message="Experience To is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'Venue Address'}" dataField="V_Address" [colSpan]="4" editorType="dxSelectBox"
+                    [editorOptions]="{ placeholder:'Select Venue Address',dataSource:vAddressList,valueExpr:'rid',displayExpr:'v_Name'}">
+                    <dxi-validation-rule type="required" message="Venue Address is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'Job Description '}" [colSpan]="4" dataField="jobDescription">
+                    <dx-html-editor [height]="200" class="border" [(value)]="jdValue">
+                        <dxo-toolbar>
+                            <dxi-item formatName="undo"></dxi-item>
+                            <dxi-item formatName="redo"></dxi-item>
+                            <dxi-item formatName="separator"></dxi-item>
+                            <dxi-item formatName="size"
+                                [formatValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
+                            <dxi-item formatName="font"
+                                [formatValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']">
+                            </dxi-item>
+                            <dxi-item formatName="separator"></dxi-item>
+                            <dxi-item formatName="bold"></dxi-item>
+                            <dxi-item formatName="italic"></dxi-item>
+                            <dxi-item formatName="underline"></dxi-item>
+                            <dxi-item formatName="separator"></dxi-item>
+                            <dxi-item formatName="alignLeft"></dxi-item>
+                            <dxi-item formatName="alignCenter"></dxi-item>
+                            <dxi-item formatName="alignRight"></dxi-item>
+                            <dxi-item formatName="alignJustify"></dxi-item>
+                            <dxi-item formatName="separator"></dxi-item>
+                            <dxi-item formatName="color"></dxi-item>
+                            <dxi-item formatName="background"></dxi-item>
+                            <dxi-item formatName="separator"></dxi-item>
+                            <dxi-item widget="dxButton" [options]="toolbarButtonOptions"></dxi-item>
+                        </dxo-toolbar>
+                    </dx-html-editor>
+                    <dx-popup [showTitle]="true" title="Markup" [(visible)]="popupVisible">
+                        <div>{{jdValue}}</div>
+                    </dx-popup>
+                    <dxi-validation-rule type="required" message="Job Description is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'Add User and Role'}" [colSpan]="4" dataField="">
+                    <dx-button text="Add" class="float-right" [elementAttr]="{ id: 'addUser', class: 'user-btn'}"
+                        (onClick)="addUserRowClick()"></dx-button>
+                    <dx-data-grid #gridContainer2 [dataSource]="datasourceUser" [allowColumnResizing]="true"
+                        [showBorders]="true" [columnResizingMode]="true" [columnMinWidth]="50" [columnAutoWidth]="true">
+                        <dxo-editing mode="row" [refreshMode]="true" [allowUpdating]="true" [allowDeleting]="true">
+                        </dxo-editing>
+                        <dxi-column caption="User" dataField="UserID">
+                            <dxo-lookup [dataSource]="comUserList" placeholder="Select User" valueExpr="rid"
+                                displayExpr="cUser"></dxo-lookup>
+                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                        </dxi-column>
+                        <dxi-column caption="Role" dataField="Role">
+                            <dxo-lookup [dataSource]="eUserRole" placeholder="Select Role" valueExpr="id"
+                                displayExpr="title"></dxo-lookup>
+                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                        </dxi-column>
+                        <dxi-column type="buttons" [width]="110">
+                            <dxi-button name="edit"></dxi-button>
+                            <dxi-button name="delete"></dxi-button>
+                        </dxi-column>
+                    </dx-data-grid>
+                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                </dxi-item>
+
+                <dxi-item [label]="{text: 'Assessment'}" dataField="AssessmentID" [colSpan]="2" editorType="dxSelectBox"
+                    [editorOptions]="{ dataSource:AssessmentList,valueExpr:'rid',displayExpr:'title',placeholder:'Assessment'}">
+                    <dxi-validation-rule type="required" message="Assessment is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'Workflow'}" dataField="WorkflowID" [colSpan]="2" editorType="dxSelectBox"
+                    [editorOptions]="{ placeholder:'Select Workflow',dataSource:WorkFlowList,valueExpr:'tid',displayExpr:'templateName'}">
+                    <dxi-validation-rule type="required" message="Role is required"></dxi-validation-rule>
+                </dxi-item>
+
+            </dx-form>
+            <dx-button class="float-right mt-3" type="success" text="Save" [useSubmitBehavior]="true" (onClick)="onValid($event)"></dx-button>
+            <dx-button class="float-right mt-3 mr-2" type="danger" text="Cancel" (onClick)="backToDashboard(eventCreateModel)"></dx-button>
+        </form>
+    </div>
+</div>
