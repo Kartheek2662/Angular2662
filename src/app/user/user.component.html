@@ -4,6 +4,7 @@
 <div class="container-fluid">
   <div class="row m-0 p-0">
     <div class="col-lg-12">
+      
       <dx-scheduler [height]="550" [dataSource]="dataSource" dateCellTemplate="dateCellTemplate" [showAllDayPanel]="false"
         [views]="views" currentView="workWeek" [currentDate]="currentDate" [startDayHour]="7" [endDayHour]="23">
         <div *dxTemplate="let data of 'dateCellTemplate'">
